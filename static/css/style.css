@@ -5,13 +5,17 @@
 }
 
 :root {
-    --ink: #1c1917;
-    --paper: #faf6f0;
-    --accent: #d95d39;
-    --accent-dark: #a8442a;
-    --line: #e3d9c9;
-    --text-muted: #6b6459;
-    --radius: 4px;
+    --ink: #384959;
+    --paper: #F8FBFF;
+    --accent: #88BDF2;
+    --accent-dark: #6A89A7;
+    --line: #BDDDFC;
+    --text-muted: #6A89A7;
+
+    --section-bg: #EFF6FF;
+    --card-bg: #FFFFFF;
+
+    --radius: 8px;
 }
 
 body {
@@ -21,7 +25,7 @@ body {
     line-height: 1.6;
 }
 
-h1, .brand {
+h1, h2, h3, h4, .brand {
     font-family: "Space Grotesk", -apple-system, sans-serif;
 }
 
@@ -58,6 +62,11 @@ h1, .brand {
     color: var(--ink);
     text-decoration: none;
     font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.site-header nav a:hover {
+    color: var(--accent-dark);
 }
 
 .hero {
@@ -134,11 +143,12 @@ h1, .brand {
     background-color: var(--ink);
     border-radius: var(--radius);
     padding: 0.5rem 1.1rem;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .social-link:hover {
     background-color: var(--accent);
+    transform: translateY(-2px);
 }
 
 .hero-photo {
@@ -169,6 +179,150 @@ h1, .brand {
     border: 3px solid var(--ink);
 }
 
+.education, .experience {
+    padding: 5rem 0;
+}
+
+.section-heading{
+    display: inline-block;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-heading h2 {
+    display: inline-block;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--paper);
+    background-color: var(--ink);
+    padding: 0.7rem 1.5rem;
+    border-radius: 0 12px 0 12px;
+}
+
+.education-list {
+    position: relative;
+    margin-left: 1rem;
+    padding-left: 2rem;
+}
+
+.education-list::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background-color: var(--line);
+    border-radius: 10px;
+}
+
+.education-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 2rem;
+    padding-bottom: 2.5rem;
+}
+
+.education-item::before {
+    content: "";
+    position: absolute;
+    left: -2.45rem;
+    top: 0.25rem;
+    width: 12px;
+    height: 12px;
+    background-color: var(--accent);
+    border: 3px solid var(--paper);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+
+.education-year {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-dark);
+}
+
+
+.education-content {
+    padding: 1.25rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.education-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.3rem;
+}
+
+.education-content p {
+    color: var(--text-muted);
+}
+
+.experience {
+    background-color: var(--section-bg);
+}
+
+.experience-group {
+    margin-bottom: 3.5rem;
+}
+
+.experience-category {
+    font-size: 1.25rem;
+    color: var(--accent-dark);
+    margin-bottom: 1.25rem;
+    padding-left: 0.75rem;
+    border-left: 4px solid var(--accent);
+}
+
+
+.experience-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.experience-item {
+    padding: 1.5rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.experience-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(56, 73, 89, 0.12);
+}
+
+
+.experience-year {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ink);
+    background-color: var(--accent);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.8rem;
+}
+
+
+.experience-content h4 {
+    font-size: 1.1rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+}
+
+.experience-content p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
 .site-footer {
     padding: 1.5rem;
     color: var(--text-muted);
@@ -176,7 +330,22 @@ h1, .brand {
     border-top: 1px solid var(--line);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
+    .site-header .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .site-header nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .hero {
+        padding: 3rem 0;
+    }
+
     .hero-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
@@ -191,5 +360,28 @@ h1, .brand {
 
     .social-links {
         justify-content: flex-start;
+    }
+
+    .education, .experience {
+        padding: 3.5rem 0;
+    }
+
+    .education-list {
+        margin-left: 0.5rem;
+        padding-left: 1.5rem;
+    }
+
+    .education-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .experience-list {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading h2 {
+        font-size: 1.8rem;
+        padding: 0.6rem 1.2rem;
     }
 }
