@@ -209,9 +209,10 @@ h1, h2, h3, h4, .brand {
     content: "";
     position: absolute;
     left: 0;
-    top: 0;
+    top: 0.8rem;
+    bottom : 10rem;
     width: 3px;
-    height: 100%;
+    
     background-color: var(--line);
     border-radius: 10px;
 }
@@ -221,6 +222,7 @@ h1, h2, h3, h4, .brand {
     display: grid;
     grid-template-columns: 150px 1fr;
     gap: 2rem;
+    align-items: start;
     padding-bottom: 2.5rem;
 }
 
@@ -228,7 +230,7 @@ h1, h2, h3, h4, .brand {
     content: "";
     position: absolute;
     left: -2.45rem;
-    top: 0.25rem;
+    top: 0.15rem;
     width: 12px;
     height: 12px;
     background-color: var(--accent);
