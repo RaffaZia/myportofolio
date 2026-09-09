@@ -25,7 +25,7 @@ body {
     line-height: 1.6;
 }
 
-h1, h2, h3, h4, .brand {
+h1,h2,h3,h4,.brand {
     font-family: "Space Grotesk", -apple-system, sans-serif;
 }
 
@@ -147,7 +147,9 @@ h1, h2, h3, h4, .brand {
     background-color: var(--ink);
     border-radius: var(--radius);
     padding: 0.5rem 1.1rem;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .social-link:hover {
@@ -187,7 +189,7 @@ h1, h2, h3, h4, .brand {
     padding: 5rem 0;
 }
 
-.section-heading{
+.section-heading {
     display: inline-block;
     margin-bottom: 3rem;
     position: relative;
@@ -214,9 +216,8 @@ h1, h2, h3, h4, .brand {
     position: absolute;
     left: 0;
     top: 0.8rem;
-    bottom : 8rem;
+    bottom: 8rem;
     width: 3px;
-    
     background-color: var(--line);
     border-radius: 10px;
 }
@@ -243,13 +244,11 @@ h1, h2, h3, h4, .brand {
     box-shadow: 0 0 0 2px var(--accent);
 }
 
-
 .education-year {
     font-size: 0.9rem;
     font-weight: 700;
     color: var(--accent-dark);
 }
-
 
 .education-content {
     padding: 1.25rem;
@@ -271,26 +270,13 @@ h1, h2, h3, h4, .brand {
     background-color: var(--section-bg);
 }
 
-.experience-group {
-    margin-bottom: 3.5rem;
-}
-
-.experience-category {
-    font-size: 1.25rem;
-    color: var(--accent-dark);
-    margin-bottom: 1.25rem;
-    padding-left: 0.75rem;
-    border-left: 4px solid var(--accent);
-}
-
-
-.experience-list {
+.experience-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    gap: 1.5rem;
 }
 
-.experience-item {
+.experience-card {
     padding: 1.5rem;
     background-color: var(--card-bg);
     border: 1px solid var(--line);
@@ -300,13 +286,21 @@ h1, h2, h3, h4, .brand {
         box-shadow 0.2s ease;
 }
 
-.experience-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(56, 73, 89, 0.12);
+.experience-card.ongoing {
+    border-left: 5px solid var(--accent-dark);
 }
 
+.experience-card.completed {
+    border-left: 5px solid var(--line);
+}
 
-.experience-year {
+.experience-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 8px 20px rgba(56, 73, 89, 0.12);
+}
+
+.experience-category {
     display: inline-block;
     font-size: 0.8rem;
     font-weight: 700;
@@ -317,16 +311,29 @@ h1, h2, h3, h4, .brand {
     margin-bottom: 0.8rem;
 }
 
-
-.experience-content h4 {
-    font-size: 1.1rem;
+.experience-card h2 {
+    font-size: 1.25rem;
     line-height: 1.3;
     margin-bottom: 0.5rem;
 }
 
-.experience-content p {
+.experience-description {
     color: var(--text-muted);
     font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.experience-status {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-dark);
+}
+
+.empty-state {
+    color: var(--text-muted);
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
 }
 
 .site-footer {
@@ -348,6 +355,7 @@ h1, h2, h3, h4, .brand {
         flex-wrap: wrap;
     }
 
+
     .hero {
         padding: 3rem 0;
     }
@@ -368,7 +376,8 @@ h1, h2, h3, h4, .brand {
         justify-content: flex-start;
     }
 
-    .education, .experience {
+    .education,
+    .experience {
         padding: 3.5rem 0;
     }
 
@@ -380,26 +389,6 @@ h1, h2, h3, h4, .brand {
     .education-item {
         grid-template-columns: 1fr;
         gap: 0.5rem;
-    }
-
-    .experience-list {
-        grid-template-columns: 1fr;
-    }
-
-    .section-heading h2 {
-        font-size: 1.8rem;
-        padding: 0.6rem 1.2rem;
-    }
-
-     .education-list {
-        margin-left: 0.5rem;
-        padding-left: 1.5rem;
-    }
-
-    .education-item {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-
         margin-bottom: 2.5rem;
     }
 
@@ -412,5 +401,14 @@ h1, h2, h3, h4, .brand {
     .education-item::before {
         left: -2.45rem;
         top: 0.55rem;
+    }
+
+    .experience-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading h2 {
+        font-size: 1.8rem;
+        padding: 0.6rem 1.2rem;
     }
 }
