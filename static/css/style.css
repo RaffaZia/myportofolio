@@ -245,9 +245,10 @@ h1,h2,h3,h4,.brand {
 }
 
 .education-year {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: var(--accent-dark);
+    padding-top: 0.2rem;
 }
 
 .education-content {
@@ -255,6 +256,12 @@ h1,h2,h3,h4,.brand {
     background-color: var(--card-bg);
     border: 1px solid var(--line);
     border-radius: var(--radius);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.education-content:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(56, 73, 89, 0.10);
 }
 
 .education-content h3 {

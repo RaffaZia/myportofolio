@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experience - {{name}}</title>
+    <title>Education - {{name}}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -22,33 +22,46 @@
     </header>
 
     <main>
-        <section class="experience-section" id="experience">
+        <section class="education">
             <div class="container">
-                <p class="section-kicker">Perjalanan saya sejauh ini</p>
-                <h1>Experience</h1>
 
-                <div class="experience-grid">
-                    {% for experience in experience_list %}
-                        <article class="experience-card {% if experience.is_ongoing %}ongoing{% else %}completed{% endif %}">
-                            <span class="experience-category">
-                                {{ experience.get_category_display }}
-                            </span>
-                            <h2>{{ experience.title }}</h2>
-                            <p class="experience-description">
-                                {{ experience.description }}
-                            </p>
+                <div class="section-heading">
+                    <h2>Education</h2>
+                </div>
 
-                            {% if experience.is_ongoing %}
-                                <p class="experience-status">Sedang berlangsung</p>
-                            {% else %}
-                                <p class="experience-status">Selesai</p>
-                            {% endif %}
+                <div class="education-list">
+
+                    {% for education in education_list %}
+
+                        <article class="education-item">
+
+                            <div class="education-year">
+                                {{ education.started_at|date:"Y" }} -
+                                {% if education.ended_at %}
+                                    {{ education.ended_at|date:"Y" }}
+                                {% else %}
+                                    Present
+                                {% endif %}
+                            </div>
+
+                            <div class="education-content">
+
+                                <h3>{{ education.institution }}</h3>
+
+                                <p>{{ education.degree }}</p>
+
+                            </div>
+
                         </article>
+
                     {% empty %}
+
                         <p class="empty-state">
-                            Belum ada pengalaman yang ditambahkan.
+                            Belum ada pendidikan yang ditambahkan.
                         </p>
+
                     {% endfor %}
+
                 </div>
             </div>
         </section>
