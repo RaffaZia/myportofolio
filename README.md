@@ -20,3 +20,5 @@ Selama pengerjaan saya tidak menggunakan AI. Salah satu masalah yang saya temuka
 
 
 
+
+
