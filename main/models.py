@@ -31,6 +31,9 @@ class Education(models.Model):
     started_at = models.DateField()
     ended_at = models.DateField(blank=True, null=True)
 
+    class Meta:
+        ordering = ["-started_at"]
+        
     def __str__(self):
         return self.institution
 
