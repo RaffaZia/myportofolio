@@ -77,7 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portofolio.wsgi.application'
 
-CSRF_TRUSTED_ORIGINS = ["https://raffa-zia-myportofolio.pws.cs.ui.ac.id/"]
+CSRF_TRUSTED_ORIGINS = ["https://raffa-zia-myportofolio.pws.cs.ui.ac.id"]
 
 
 # Database
