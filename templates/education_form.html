@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block meta %}
+    <title>Add Education - {{ name }}</title>
+{% endblock meta %}
+
+{% block content %}
+
+<main>
+    <section class="education">
+        <div class="container">
+
+            <div class="section-heading">
+                <h2>Add Education</h2>
+            </div>
+
+            <form method="POST" class="education-form">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="submit-button">
+                    Save Education
+                </button>
+            </form>
+
+            <div class="form-actions">
+                <a href="{% url 'main:show_education' %}" class="back-button">
+                    ← Back to Education
+                </a>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+{% endblock content %}

@@ -1,76 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Education - {{name}}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <header class="site-header">
+{% extends "base.html" %}
+
+{% block meta %}
+    <title>Education - {{ name }}</title>
+{% endblock meta %}
+
+{% block content %}
+
+<main>
+    <section class="education">
         <div class="container">
-            <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
-            <nav>
-                <a href="{% url 'main:show_main' %}">Profile</a>
-                <a href="{% url 'main:show_education' %}">Education</a>
-                <a href="{% url 'main:show_experience' %}">Experience</a>
-            </nav>
-        </div>
-    </header>
 
-    <main>
-        <section class="education">
-            <div class="container">
-
-                <div class="section-heading">
-                    <h2>Education</h2>
-                </div>
-
-                <div class="education-list">
-
-                    {% for education in education_list %}
-
-                        <article class="education-item">
-
-                            <div class="education-year">
-                                {{ education.started_at|date:"Y" }} -
-                                {% if education.ended_at %}
-                                    {{ education.ended_at|date:"Y" }}
-                                {% else %}
-                                    Present
-                                {% endif %}
-                            </div>
-
-                            <div class="education-content">
-
-                                <h3>{{ education.institution }}</h3>
-
-                                <p>{{ education.degree }}</p>
-
-                            </div>
-
-                        </article>
-
-                    {% empty %}
-
-                        <p class="empty-state">
-                            Belum ada pendidikan yang ditambahkan.
-                        </p>
-
-                    {% endfor %}
-
-                </div>
+            <div class="section-heading">
+                <h2>Education</h2>
             </div>
-        </section>
-    </main>
+            
+            <div class="education-actions">
+                <a href="{% url 'main:create_education' %}" class="add-button">
+                    + Add Education
+                </a>
+            </div>
 
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 {{name}}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
+            <div class="education-list">
+                {% for education in education_list %}
+                    <article class="education-item">
+                        <div class="education-year">
+                            {{ education.started_at|date:"Y" }} -
+                            {% if education.ended_at %}
+                                {{ education.ended_at|date:"Y" }}
+                            {% else %}
+                                Present
+                            {% endif %}
+                        </div>
+                        <div class="education-content">
+                            <h3>{{ education.institution }}</h3>
+                            <p>{{ education.degree }}</p>
+                        </div>
+                        {% include "components/education_delete_modal.html" %}
+
+                    </article>
+                {% empty %}
+                    <p class="empty-state">
+                        Belum ada pendidikan yang ditambahkan.
+                    </p>
+
+                {% endfor %}
+
+            </div>
         </div>
-    </footer>
-</body>
-</html>
+    </section>
+</main>
+
+{% endblock content %}
