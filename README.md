@@ -4,9 +4,7 @@ NPM : 2506619285
 
 Kelas : PBP A
 
-Dosen : Jessica Naraiswari Arwidarasti
-
-### Tugas 1
+## Tugas 1
 
 1. Pada Tutorial dan Tugas 1, saya menggunakan beberapa elemen semantik HTML5 seperti `<section>` dan `<article>`. Saya menggunakan `<section>` untuk membagi halaman menjadi beberapa bagian utama, yaitu Profile, Education, dan Experience. Sementara itu, saya menggunakan `<article>` untuk setiap informasi pendidikan dan pengalaman karena masing-masing informasi tersebut dapat dianggap sebagai satu unit informasi yang berdiri sendiri. Penggunaan elemen tersebut membantu saya membuat struktur HTML yang lebih terorganisir dan mudah dipahami sebelum mulai mengatur tampilannya menggunakan CSS. Saya juga merasa penggunaan elemen semantik membuat struktur website lebih jelas dibandingkan jika seluruh halaman hanya menggunakan `<div>`. Untuk membuat static web, struktur ini membantu saya memisahkan isi berdasarkan bagian-bagian yang memiliki tujuan berbeda sehingga lebih mudah dikembangkan ketika menambahkan section baru.
 
@@ -19,7 +17,7 @@ Dalam pengerjaan Tugas 1 ini, saya juga mencoba menggunakan elemen **`<article>`
 Selama pengerjaan saya tidak menggunakan AI. Salah satu masalah yang saya temukan adalah ketika menambahkan section Education dan Experience, tampilan keduanya belum memiliki struktur dan tata letak yang sesuai karena CSS yang sebelumnya saya buat hanya mengatur bagian Profile. Saya kemudian memeriksa kembali struktur HTML dan CSS, lalu menambahkan class yang sesuai untuk setiap bagian seperti education-item, experience-item, dan section-heading. Saya juga mencoba menyesuaikan layout menggunakan CSS Grid agar beberapa bagian Experience dapat ditampilkan dalam dua kolom pada desktop dan satu kolom pada layar yang lebih kecil. Dalam proses pengerjaannya, saya lebih banyak menggunakan metode trial and error, yaitu dengan mencoba mengubah dan menyesuaikan kode yang sudah dibuat pada Tutorial 1 untuk melihat pengaruhnya terhadap tampilan website dan saya juga mencari referensi dari css documentation pada link berikut https://developer.mozilla.org/en-US/docs/Web/CSS dan website https://www.w3schools.com/ serta buku pegangan yang saya miliki. Dari proses tersebut, saya belajar untuk memahami fungsi dari setiap bagian kode melalui percobaan secara langsung, serta memahami bahwa ketika menambahkan section baru, struktur HTML dan CSS perlu disesuaikan agar keduanya dapat bekerja dengan baik.
 
 
-### Tugas 2
+## Tugas 2
 
 1. Ketika pengguna membuka halaman portfolio, browser terlebih dahulu mengirimkan HTTP request ke URL yang dituju. Request tersebut diterima oleh Django dan diproses melalui `urls.py` pada project yang kemudian meneruskannya ke `urls.py` pada aplikasi `main`. Pada `main/urls.py`, URL tersebut dipetakan ke view yang sesuai menggunakan named route. View kemudian menjalankan logika yang diperlukan, termasuk mengambil data dari model menggunakan query Django ORM. Setelah data diperoleh, view memasukkannya ke dalam context dan meneruskannya ke template. Template kemudian menggabungkan struktur HTML dengan data dari context menggunakan Django Template Language. Hasil render tersebut dikembalikan oleh Django sebagai HTTP response sehingga halaman portfolio dapat ditampilkan pada browser. Alur ini sesuai dengan arsitektur MTV Django, di mana View menjadi penghubung antara Model dan Template.
 
@@ -32,3 +30,69 @@ Deklarasi AI :
 Selama pengerjaan tugas ini saya tidak menggunakan AI dalam proses implementasi kode. Saya mengerjakan setiap bagian secara mandiri dengan memahami struktur project dan mengikuti alur Model-View-Template (MTV) Django serta mengikuti langkah-langkah pada tutorial 2 yang saya sesuaikan lagi dengan section yang saya kerjakan. Salah satu hal yang menjadi tantangan dalam pengerjaan adalah mengubah bagian Education yang sebelumnya ditulis secara hard-coded menjadi data yang dapat diambil dari database. Saya perlu menentukan struktur model yang sesuai untuk menyimpan informasi seperti nama institusi, jenjang pendidikan, serta tahun mulai dan selesai. Setelah menentukan field yang diperlukan, saya menghubungkan model tersebut dengan view dan template agar data dapat ditampilkan secara dinamis menggunakan Django. Salah satu permasalahan yang cukup reflektif bagi saya adalah ketika menambahkan model Education, saya sempat mengalami error karena salah menuliskan parameter blank menjadi Blank. Saya kemudian membaca pesan error yang diberikan oleh Django dan memperbaiki penulisan parameter tersebut menjadi blank=True. Setelah itu, saya menjalankan makemigrations dan migrate untuk menerapkan perubahan model ke database. Hal tersebut membuat saya menyadari bahwa dalam proses pembuatan sebuah project web seperti ini dibutuhkan ketelitian dan fokus yang tinggi. Typo sedikit saja bisa menyebabkan kesalahan yang fatal. Memang tidak ada indikasi error pada vs code seperti garis kuning atau merah, namun hal tersebut berpotensi menimbulkan runtime error ketika kita akan migrasi models tersebut.
 
 Saya juga melakukan pengecekan terhadap struktur models.py, views.py, urls.py, dan template untuk memastikan data Education dapat mengalir dari database hingga ditampilkan pada halaman website. Selain itu, saya menambahkan unit test untuk memastikan URL dapat diakses, data Education dapat ditampilkan ketika tersedia, serta pesan kondisi kosong muncul ketika belum terdapat data. Dari proses tersebut, saya belajar memahami hubungan antara Model, View, Template, dan URL dalam Django serta menjadi lebih terbiasa membaca pesan error dan mencari letak masalah secara mandiri.
+
+
+## Tugas 3
+1. Dengan Menggunakan `ModelForm` pada Django kita dapat membuat form berdasarkan model Django yang sudah dibuat. Dengan `ModelFrom` kita tidak perlu membuat setiap field form secara manual menggunakan HTML dan kemudian menangani proses penyimpanannya secara terpisah. Selain itu, penggunaan `ModelForm` juga membuat proses pengembangan jauh lebih efisien karena struktur form mengikuti model yang sudah ada. Selain itu, Django juga membantu validasi terhadap data yang dimasukkan sebelum data disimpan ke database.
+
+Sementara itu penggunaan `{% csrf_token %}` wajib ditambahkan pada form yang melakukan request POST untuk melindungi aplikasi dari serangan CSRF. Dimana CSRF ini merupakan serangan dimana ketika pengguna yang sedang login dapat secara tidak sengaja mengirimkan request ke aplikasi melalui website lain. Django memberikan token unik pada setiap form. Ketika form dikirim, Django akan memastikan bahwa request berasal dari form yang dibuat oleh aplikasi kita
+
+2. JSON dan XML sama sama dapat digunaan untuk melakukan pertukaran data antara aplikasi. Namun, JSON lebih banyak digunakan dalam pengembangan aplikasi web modern karena memiliki struktur yang lebih sederhana dan lebih ringkas. JSON menggunakan struktur yang mirip dengan object dan array pada JavaScript. Hal ini membuat JSON lebih mudah digunakan dalam aplikasi web, terutama ketika data perlu di proses menggunakan javaScript. Dibandingan dengan XML, JSON memiliki sintaks yang lebuh sederhana sehingga data yang dikirimkan cenderung lebh ringkas dan lebih mudah dibaca dan diproses.
+
+3. Pada Tugas ini, data portofolio berupa experience disimpan dalam databse dan direpresentasikan menggunakan model Django experience. Untuk mengembalikan data tersebut dalam bentuk JSON. Langkah pertama, `Experience.objects.all()` digunakan untuk mengambil seluruh data Experience dari databse. Hasilnya berupa kumpulan object django. Kemudian, data tersebut diproses menggunakan `serializers.serialize("json", experience_list)` proses ini disebut **serialization**, yaitu proses mengubah object atau data yang direpresentasikan oleh model django menjadi format JSON. Serialization diperlukan karena object Django yang berasal dari database tidak dapat langsung dikirimkan sebagai response JSON. Data tersebut harus terlebih dahulu diubah menjadi format yang dapat dipahami dan diproses oleh client. Setelah proses serialization selesai, data JSOn dikembalikan menggunakan HttpResponse yang memberikan informasi kepada client bahwa response yang diterima memiliki format JSON. Kemudian JSOn tersebut juga digunakan kembali pada halaman experience melalui proses `deserialization`. Data JSON yang sebelumnya dibuat melalui serialization diubah kembali menjadi object django sebelum dikirimkan ke template. 
+
+secara singkat alurnya Database -> django model -> serialization -> JSON -> deserialization -> django objects -> template -> halaman experience
+
+
+### AI Disclosure
+
+### Deskripsi Proyek
+
+Tugas 3 merupakan pengembangan lanjutan dari website portofolio pribadi yang telah dibuat pada tugas sebelumnya menggunakan framework Django. Pada tugas ini, saya mengembangkan fitur `Experience` agar data pengalaman dapat dikelola secara dinamis melalui aplikasi.
+
+Fitur yang dikembangkan meliputi penambahan data menggunakan `ModelForm`, menampilkan data dari database, mengubah data yang sudah ada, menghapus data, serta menyediakan endpoint JSON untuk data `Experience`. Data JSON tersebut kemudian digunakan kembali melalui proses deserialization sebelum ditampilkan pada halaman Experience.
+
+Dalam pengerjaannya, saya melakukan penyesuaian terhadap struktur dari Tutorial 03 dengan menggunakan objek `Experience` yang sudah terdapat pada proyek saya, bukan menggunakan objek `Project` seperti contoh pada tutorial.
+
+### Problem Solving
+
+Saya tidak menggunakan AI untuk menulis, menghasilkan, atau menyelesaikan kode program pada Tugas 3. Implementasi kode, debugging, penyesuaian struktur tutorial dengan proyek, serta proses problem solving dilakukan secara mandiri berdasarkan materi perkuliahan, tutorial, dan dokumentasi yang digunakan dalam pengerjaan tugas.
+
+Selama pengerjaan Tugas 3, terdapat beberapa bagian yang perlu saya pahami dan selesaikan secara mandiri.
+
+**1. Menyesuaikan implementasi tutorial dengan struktur proyek**
+
+Tutorial 03 menggunakan objek `Project`, sedangkan proyek saya menggunakan model `Experience`. Oleh karena itu, saya perlu menyesuaikan `ModelForm`, view, URL, template, dan proses JSON agar sesuai dengan field yang terdapat pada model `Experience`.
+
+Saya menyelesaikannya dengan memahami hubungan antara model, form, view, URL, dan template terlebih dahulu, kemudian mengimplementasikan setiap bagian berdasarkan struktur proyek yang sudah dibuat pada tugas sebelumnya.
+
+**2. Menggunakan kembali template form untuk create dan update**
+
+Saya ingin menghindari pembuatan dua template yang berbeda untuk menambahkan dan mengubah Experience. Oleh karena itu, experience_form.html dibuat agar dapat digunakan untuk kedua kebutuhan tersebut.
+
+Pada proses update, form diberikan instance dari Experience yang ingin diubah sehingga data sebelumnya dapat ditampilkan kembali pada form. Tampilan judul dan tombol juga dibuat menyesuaikan apakah form digunakan untuk menambahkan atau mengubah data.
+
+**3. Memahami proses Serialization dan Deserialization**
+Bagian JSON menjadi salah satu bagian yang perlu saya pahami karena data yang terdapat pada database berupa object Django tidak dapat langsung dikembalikan sebagai JSON.
+
+Saya menggunakan proses serialization untuk mengubah object Experience menjadi data JSON pada endpoint /api/experience/. Setelah itu, pada view show_experience, data JSON tersebut diproses kembali menggunakan deserialization sehingga dapat digunakan sebagai object Django oleh template.
+
+**4. Menghindari duplikasi CSS pada form**
+
+Saat mengembangkan form untuk `Experience`, saya menyadari bahwa struktur dan kebutuhan styling form tersebut memiliki banyak kesamaan dengan form `Education` yang sudah dibuat sebelumnya. Jika setiap form memiliki styling yang ditulis secara terpisah, akan terjadi duplikasi CSS dan kode menjadi lebih sulit untuk dipelihara.
+
+Untuk mengatasinya, saya menggunakan selector CSS yang bersifat umum dan dapat digunakan oleh kedua form. Styling untuk elemen seperti `input`, `textarea`, `select`, tombol submit, serta bagian action form dibuat agar dapat digunakan kembali oleh form `Education` maupun `Experience`.
+
+Dengan pendekatan tersebut, ketika terdapat perubahan pada tampilan form, saya tidak perlu mengubah styling pada setiap halaman secara terpisah. Hal ini membuat kode CSS menjadi lebih reusable dan mengurangi duplikasi kode.
+
+Sebagai contoh, styling form dibuat menggunakan selector yang dapat digunakan bersama:
+
+```css
+.education-form input,
+.education-form textarea,
+.education-form select,
+.experience-form input,
+.experience-form textarea,
+.experience-form select {
+    /* styling yang sama */
+}

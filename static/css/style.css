@@ -4,6 +4,8 @@
     box-sizing: border-box;
 }
 
+/* Root untuk color palete */
+
 :root {
     --ink: #384959;
     --paper: #F8FBFF;
@@ -17,6 +19,8 @@
 
     --radius: 8px;
 }
+
+/* global */
 
 body {
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -34,6 +38,8 @@ h1,h2,h3,h4,.brand {
     margin: 0 auto;
     padding: 0 1.5rem;
 }
+
+/* header settings */
 
 .site-header {
     position: sticky;
@@ -72,6 +78,8 @@ h1,h2,h3,h4,.brand {
 .site-header nav a:hover {
     color: var(--accent-dark);
 }
+
+/* hero settings / profile */
 
 .hero {
     padding: 4.5rem 0 5rem;
@@ -157,6 +165,8 @@ h1,h2,h3,h4,.brand {
     transform: translateY(-2px);
 }
 
+/* settings untuk foto */
+
 .hero-photo {
     grid-area: photo;
     align-self: center;
@@ -185,7 +195,9 @@ h1,h2,h3,h4,.brand {
     border: 3px solid var(--ink);
 }
 
-.education, .experience {
+/* general section */
+
+.education,.experience {
     padding: 5rem 0;
 }
 
@@ -204,6 +216,8 @@ h1,h2,h3,h4,.brand {
     padding: 0.7rem 1.5rem;
     border-radius: 0 12px 0 12px;
 }
+
+/* setting untuk education timeline */
 
 .education-list {
     position: relative;
@@ -256,7 +270,9 @@ h1,h2,h3,h4,.brand {
     background-color: var(--card-bg);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .education-content:hover {
@@ -273,88 +289,18 @@ h1,h2,h3,h4,.brand {
     color: var(--text-muted);
 }
 
-.education-actions {
-    margin-bottom: 2rem;
-}
-
-.add-button {
-    display: inline-block;
-    padding: 0.75rem 1.25rem;
-    background-color: var(--accent-dark);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 700;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.add-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(56, 73, 89, 0.18);
-}
-
-.education-form {
-    max-width: 700px;
-}
-
-.education-form p {
-    margin-bottom: 1.25rem;
-}
-
-.education-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-}
-
-.education-form input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 1rem;
-    box-sizing: border-box;
-}
-
-.education-form input:focus {
-    outline: none;
-    border-color: var(--accent-dark);
-}
-
-.submit-button {
-    padding: 0.75rem 1.25rem;
-    border: none;
-    border-radius: 8px;
-    background-color: var(--accent-dark);
-    color: white;
-    font-family: inherit;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.submit-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(56, 73, 89, 0.18);
-}
-
-.form-actions {
-    margin-top: 1rem;
-}
-
-.back-button {
-    color: var(--accent-dark);
-    text-decoration: none;
-    font-weight: 700;
-}
-
-.back-button:hover {
-    text-decoration: underline;
-}
+/* settings untuk experience */
 
 .experience {
     background-color: var(--section-bg);
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .experience-grid {
@@ -416,6 +362,165 @@ h1,h2,h3,h4,.brand {
     color: var(--accent-dark);
 }
 
+/* Experience update settings*/
+
+.experience-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+/* setting untuk thumbnail*/
+.experience-thumbnail {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+}
+
+.edit-button {
+    display: inline-block;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--accent-dark);
+    border-radius: 8px;
+    color: var(--accent-dark);
+    background-color: transparent;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.edit-button:hover {
+    background-color: var(--accent-dark);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* button add (bisa buat re-use) */
+
+.education-actions {
+    margin-bottom: 2rem;
+}
+
+.add-button {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--accent-dark);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.add-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(56, 73, 89, 0.18);
+}
+
+/* form settings untuk education sama experience */
+
+.education-form,
+.experience-form {
+    max-width: 700px;
+}
+
+.education-form p,
+.experience-form p {
+    margin-bottom: 1.25rem;
+}
+
+.education-form label,
+.experience-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+/* Input, textarea, select */
+
+.education-form input,
+.education-form textarea,
+.education-form select,
+.experience-form input,
+.experience-form textarea,
+.experience-form select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background-color: var(--card-bg);
+    box-sizing: border-box;
+}
+
+.education-form input:focus,
+.education-form textarea:focus,
+.education-form select:focus,
+.experience-form input:focus,
+.experience-form textarea:focus,
+.experience-form select:focus {
+    outline: none;
+    border-color: var(--accent-dark);
+    box-shadow: 0 0 0 2px rgba(136, 189, 242, 0.2);
+}
+
+.education-form textarea,
+.experience-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* setting submit button */
+
+.submit-button {
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--accent-dark);
+    color: white;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(56, 73, 89, 0.18);
+}
+
+/* back-button settings */
+
+.form-actions {
+    margin-top: 1rem;
+}
+
+.back-button {
+    color: var(--accent-dark);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
+
+/* empty  */
+
 .empty-state {
     color: var(--text-muted);
     grid-column: 1 / -1;
@@ -423,57 +528,92 @@ h1,h2,h3,h4,.brand {
     padding: 2rem;
 }
 
-.site-footer {
-    padding: 1.5rem;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--line);
-}
+/* delete buton setting */
 
 .button {
     display: inline-block;
-    padding: 0.6rem 1rem;
+    padding: 0.55rem 1rem;
     border: none;
     border-radius: 8px;
     font-family: inherit;
+    font-size: 0.9rem;
     font-weight: 700;
     cursor: pointer;
     text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .button-danger {
-    background-color: #b42318;
+    background-color: transparent;
+    color: #B42318;
+    border: 1px solid #B42318;
+}
+
+.button-danger:hover {
+    background-color: #B42318;
     color: white;
+    transform: translateY(-2px);
 }
 
 .button-secondary {
     background-color: var(--line);
-    color: var(--text);
+    color: var(--ink);
 }
 
+.button-secondary:hover {
+    background-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.education-delete-action {
+    margin-top: 1rem;
+}
+
+/* delete modal setting */
+
 .project-delete-modal {
-    border: none; 
-    
+    border: none;
     border-radius: 12px;
     padding: 0;
     max-width: 420px;
     width: calc(100% - 2rem);
+    box-shadow: 0 12px 40px rgba(56, 73, 89, 0.20);
 }
 
 .project-delete-modal::backdrop {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(56, 73, 89, 0.45);
 }
 
 .project-delete-modal__content {
     padding: 2rem;
+    background-color: var(--card-bg);
+    color: var(--ink);
+}
+
+.project-delete-modal__content h2 {
+    margin-bottom: 0.75rem;
+}
+
+.project-delete-modal__content p {
+    color: var(--text-muted);
+    line-height: 1.6;
 }
 
 .project-delete-modal__close {
     float: right;
     border: none;
-    background: none;
+    background: transparent;
+    color: var(--text-muted);
     font-size: 1.5rem;
     cursor: pointer;
+}
+
+.project-delete-modal__close:hover {
+    color: var(--ink);
 }
 
 .project-delete-modal__actions {
@@ -483,8 +623,19 @@ h1,h2,h3,h4,.brand {
     margin-top: 1.5rem;
 }
 
+/* footer setting */
+
+.site-footer {
+    padding: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--line);
+}
+
+/* responsive untuk mobile */
 
 @media (max-width: 700px) {
+
     .site-header .container {
         flex-direction: column;
         align-items: flex-start;
@@ -495,7 +646,6 @@ h1,h2,h3,h4,.brand {
         gap: 1rem;
         flex-wrap: wrap;
     }
-
 
     .hero {
         padding: 3rem 0;
@@ -548,8 +698,26 @@ h1,h2,h3,h4,.brand {
         grid-template-columns: 1fr;
     }
 
+    .experience-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .section-heading h2 {
         font-size: 1.8rem;
         padding: 0.6rem 1.2rem;
+    }
+
+    .project-delete-modal__actions {
+        flex-direction: column-reverse;
+    }
+
+    .project-delete-modal__actions .button,
+    .project-delete-modal__actions form {
+        width: 100%;
+    }
+
+    .project-delete-modal__actions form .button {
+        width: 100%;
     }
 }

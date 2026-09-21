@@ -11,14 +11,31 @@
         <div class="container">
 
             <p class="section-kicker">Perjalanan saya sejauh ini</p>
-            <h1>Experience</h1>
+            <div class="experience-header">
+                <h1>Experience</h1>
+                <a 
+                    href="{% url 'main:create_experience' %}"
+                    class="add-button"
+                >
+                    + Add Experience
+                </a>
+            </div>
+            
 
             <div class="experience-grid">
 
                 {% for experience in experience_list %}
 
                     <article class="experience-card {% if experience.is_ongoing %}ongoing{% else %}completed{% endif %}">
+                        {% if experience.thumbnail %}
+                            <img
+                                src="{{ experience.thumbnail }}"
+                                alt="Thumbnail {{ experience.title }}"
+                                class="experience-thumbnail"
+                            >
+                        {% endif %}
 
+    
                         <span class="experience-category">
                             {{ experience.get_category_display }}
                         </span>
@@ -38,6 +55,21 @@
                                 Selesai
                             </p>
                         {% endif %}
+
+                        <div class="experience-actions">
+                            <a
+                                href="{% url 'main:update_experience' experience.id %}"
+                                class="edit-button"
+                            >
+                                Edit
+                            </a>
+
+                            <button type="button" class="button button-danger" popovertarget="delete-modal-{{experience.id}}">
+                                Delete
+                            </button>
+                        </div>
+
+                        {% include "components/experience_delete_modal.html" %}
 
                     </article>
 
