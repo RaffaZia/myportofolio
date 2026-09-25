@@ -13,12 +13,11 @@
             <p class="section-kicker">Perjalanan saya sejauh ini</p>
             <div class="experience-header">
                 <h1>Experience</h1>
-                <a 
-                    href="{% url 'main:create_experience' %}"
-                    class="add-button"
-                >
-                    + Add Experience
-                </a>
+                {% if user.is_superuser %}
+                    <a href="{% url 'main:create_experience' %}" class="add-button">
+                        + Add Experience
+                    </a>
+                {% endif %}
             </div>
             
 
@@ -56,21 +55,26 @@
                             </p>
                         {% endif %}
 
-                        <div class="experience-actions">
-                            <a
-                                href="{% url 'main:update_experience' experience.id %}"
-                                class="edit-button"
-                            >
-                                Edit
-                            </a>
+                        {% include "components/experience_star.html" with experience=experience %}
+                        
+                        {% if user.is_superuser %}
+                            <div class="experience-actions">
+                            
+                                <a
+                                    href="{% url 'main:update_experience' experience.id %}"
+                                    class="edit-button"
+                                >
+                                    Edit
+                                </a>
 
-                            <button type="button" class="button button-danger" popovertarget="delete-modal-{{experience.id}}">
-                                Delete
-                            </button>
-                        </div>
+                                <button type="button" class="button button-danger" popovertarget="delete-modal-{{experience.id}}">
+                                    Delete
+                                </button>
+                            </div>
 
-                        {% include "components/experience_delete_modal.html" %}
+                            {% include "components/experience_delete_modal.html" %}
 
+                        {% endif %}
                     </article>
 
                 {% empty %}

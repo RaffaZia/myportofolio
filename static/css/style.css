@@ -632,6 +632,223 @@ h1,h2,h3,h4,.brand {
     border-top: 1px solid var(--line);
 }
 
+/*setting untuk star experience*/
+.star-form {
+    display: inline;
+}
+
+.button-star {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--ink);
+}
+
+.button-star.is-starred {
+    background: var(--accent);
+}
+
+.star-count {
+    padding: 0.05rem 0.4rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    font-size: 0.8rem;
+}
+
+/*setting untuk login dan register*/
+
+/* =========================================
+   AUTHENTICATION FORMS
+   ========================================= */
+
+.auth-section {
+    padding: 4rem 0 5rem;
+    min-height: calc(100vh - 180px);
+    display: flex;
+    align-items: center;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.auth-header {
+    margin-bottom: 1.5rem;
+}
+
+.auth-header .section-kicker {
+    margin-bottom: 0.5rem;
+}
+
+.auth-header h1 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 2.2rem;
+    line-height: 1.2;
+}
+
+.auth-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(56, 73, 89, 0.08);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.auth-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.auth-form label {
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.auth-form input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.auth-form input:focus {
+    border-color: var(--accent);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(136, 189, 242, 0.2);
+}
+
+.auth-form input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.auth-form .helptext,
+.auth-form ul.helptext {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.auth-form ul.helptext {
+    margin-top: 0.15rem;
+}
+
+.auth-form .form-error,
+.auth-form .errorlist {
+    margin: 0;
+    color: #b42318;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.auth-form .errorlist {
+    padding-left: 1.2rem;
+}
+
+.auth-form .non-field-errors {
+    padding: 0.8rem 1rem;
+    border: 1px solid #f1b5b0;
+    border-radius: 8px;
+    background-color: #fff5f4;
+    color: #b42318;
+    font-size: 0.85rem;
+}
+
+.auth-button {
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--ink);
+    color: white;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.auth-button:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(56, 73, 89, 0.15);
+}
+
+.auth-footer {
+    margin: 1.5rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.auth-footer a {
+    color: var(--accent-dark);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.form-message {
+    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background-color: var(--section-bg);
+    color: var(--ink);
+    font-size: 0.9rem;
+}
+
+
+/* =========================================
+   RESPONSIVE AUTH FORM
+   ========================================= */
+
+@media (max-width: 600px) {
+    .auth-section {
+        padding: 3rem 0 4rem;
+    }
+
+    .auth-card {
+        padding: 1.5rem;
+    }
+
+    .auth-header h1 {
+        font-size: 1.8rem;
+    }
+}
+
 /* responsive untuk mobile */
 
 @media (max-width: 700px) {
