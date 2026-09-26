@@ -282,11 +282,12 @@ h1,h2,h3,h4,.brand {
 
 .education-content h3 {
     font-size: 1.25rem;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.35rem;
 }
 
 .education-content p {
     color: var(--text-muted);
+    margin: 0;
 }
 
 /* settings untuk experience */
@@ -407,6 +408,28 @@ h1,h2,h3,h4,.brand {
 
 .education-actions {
     margin-bottom: 2rem;
+}
+
+.education-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+}
+
+.education-delete-action {
+    margin-top: 0;
+}
+
+.education-card-actions .edit-button,
+.education-card-actions .button {
+    height: 42px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .add-button {
@@ -567,10 +590,6 @@ h1,h2,h3,h4,.brand {
 .button-secondary:hover {
     background-color: var(--accent);
     transform: translateY(-2px);
-}
-
-.education-delete-action {
-    margin-top: 1rem;
 }
 
 /* delete modal setting */

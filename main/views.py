@@ -65,7 +65,11 @@ def show_education(request):
 
     return render(request, "education.html", context)
 
+@login_required(login_url="/login/")
 def create_education(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     form = EducationForm(request.POST or None)
 
     if request.method == "POST":
@@ -92,7 +96,12 @@ def get_education_xml(request):
 
     return HttpResponse(data, content_type="application/xml")
 
+@login_required(login_url="/login/")
 def delete_education(request, education_id):
+
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     education = get_object_or_404(Education, pk=education_id)
 
     if request.method == "POST":
@@ -101,6 +110,34 @@ def delete_education(request, education_id):
         return redirect("main:show_education")
 
     return redirect("main:show_education")
+
+@login_required(login_url="/login/")
+def update_education(request, education_id):
+    if not request.user.has_perm("main.change_experience"):
+        raise PermissionDenied
+    
+    education = get_object_or_404(
+        Education,
+        pk=education_id
+    )
+
+    form = EducationForm(
+        request.POST or None,
+        instance=education
+    )
+
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect("main:show_experience")
+
+    context = {
+        "name": "Raffa",
+        "form": form,
+        "experience": education,
+    }
+
+    return render(request,"experience_form.html",context)
 
 @login_required(login_url="/login/")
 def create_experience(request):
@@ -123,7 +160,7 @@ def create_experience(request):
 
 @login_required(login_url="/login/")
 def update_experience(request, experience_id):
-    if not request.user.is_superuser:
+    if not request.user.has_perm("main.change_experience"):
         raise PermissionDenied
     
     experience = get_object_or_404(
@@ -147,11 +184,7 @@ def update_experience(request, experience_id):
         "experience": experience,
     }
 
-    return render(
-        request,
-        "experience_form.html",
-        context
-    )
+    return render(request,"experience_form.html",context)
 
 @login_required(login_url="/login/")
 def delete_experience(request, experience_id):

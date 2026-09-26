@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
 {% block meta %}
-    <title>Add Education - {{ name }}</title>
+    <title>
+        {% if education %}
+            Edit Education - {{ name }}
+        {% else %}
+            Add Education - {{ name }}
+        {% endif %}
+    
+    </title>
 {% endblock meta %}
 
 {% block content %}
@@ -11,7 +18,13 @@
         <div class="container">
 
             <div class="section-heading">
-                <h2>Add Education</h2>
+                <h2>
+                    {% if education %}
+                        Edit Education
+                    {% else %}
+                        Add Education
+                    {% endif %}
+                </h2>
             </div>
 
             <form method="POST" class="education-form">
@@ -20,7 +33,11 @@
                 {{ form.as_p }}
 
                 <button type="submit" class="submit-button">
-                    Save Education
+                    {% if education %}
+                        Update Education
+                    {% else %}
+                        Save Education
+                    {% endif %}
                 </button>
             </form>
 

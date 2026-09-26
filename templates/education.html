@@ -13,12 +13,14 @@
             <div class="section-heading">
                 <h2>Education</h2>
             </div>
-            
+
+            {% if user.is_superuser %}
             <div class="education-actions">
                 <a href="{% url 'main:create_education' %}" class="add-button">
                     + Add Education
                 </a>
             </div>
+            {% endif %}
 
             <div class="education-list">
                 {% for education in education_list %}
@@ -34,9 +36,25 @@
                         <div class="education-content">
                             <h3>{{ education.institution }}</h3>
                             <p>{{ education.degree }}</p>
-                        </div>
-                        {% include "components/education_delete_modal.html" %}
+                            {% if perms.main.change_education or user.is_superuser %}
+                                <div class="education-card-actions">
+                                    
+                                    {% if perms.main.change_education %}
+                                        <a
+                                            href="{% url 'main:update_education' education.id %}"
+                                            class="edit-button"
+                                        >
+                                            Edit
+                                        </a>
+                                    {% endif %}
 
+                                    {% if user.is_superuser %}
+                                        {% include "components/education_delete_modal.html" %}
+                                    {% endif %}
+
+                                </div>
+                            {% endif %}
+                        </div>
                     </article>
                 {% empty %}
                     <p class="empty-state">

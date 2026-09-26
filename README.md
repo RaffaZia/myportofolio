@@ -87,7 +87,7 @@ Dengan pendekatan tersebut, ketika terdapat perubahan pada tampilan form, saya t
 
 Sebagai contoh, styling form dibuat menggunakan selector yang dapat digunakan bersama:
 
-```css
+
 .education-form input,
 .education-form textarea,
 .education-form select,
@@ -96,3 +96,29 @@ Sebagai contoh, styling form dibuat menggunakan selector yang dapat digunakan be
 .experience-form select {
     /* styling yang sama */
 }
+
+
+## AI Diclosure Tugas 4
+
+Saya tidak menggunakan AI untuk menulis, menghasilkan, atau menyelesaikan kode program pada Tugas 3. Implementasi kode, debugging, penyesuaian struktur tutorial dengan proyek, serta proses problem solving dilakukan secara mandiri berdasarkan materi perkuliahan, tutorial, dan dokumentasi yang digunakan dalam pengerjaan tugas.
+
+### Deskripsi Proyek
+Tugas 4 merupakan pengembangan lanjutan dari website portofolio pribadi yang telah dibuat pada tugas sebelumnya menggunakan framework Django. Pada tugas ini, saya menerapkan sistem authentication dan authorization untuk membatasi akses pengguna terhadap data portofolio.
+
+Fitur yang dikembangkan meliputi penerapan role Editor menggunakan Django Group dan Permission, pembatasan akses terhadap fitur tambah, ubah, dan hapus data Experience, serta penerapan fitur star yang hanya dapat digunakan oleh pengguna yang sudah login. Selain itu, saya juga menerapkan pembatasan akses pada bagian Education agar pengguna dengan role Editor dapat mengubah data tanpa memiliki hak untuk menambah atau menghapus data.
+
+Dalam pengerjaannya, saya melakukan penyesuaian terhadap struktur dari Tutorial 04 dengan menggunakan objek Experience dan Education yang sudah terdapat pada proyek saya.
+
+### Problem Solving
+
+**1. Menerapkan role Editor menggunakan Django Group dan Permission**
+Saya perlu membuat role baru yaitu Editor yang memiliki hak untuk mengubah data, tetapi tidak dapat menambah atau menghapus data. Untuk menerapkannya, saya membuat Group Editor melalui Django Admin dan memberikan permission change_experience serta change_education.
+
+**2. Menggunakan has_perm() untuk membatasi akses**
+Salah satu bagian yang perlu saya pahami adalah perbedaan antara pengecekan is_superuser dan permission yang dimiliki pengguna. Sebelumnya, fitur edit hanya dapat digunakan oleh superuser. Dengan demikian, akses edit ditentukan berdasarkan permission yang dimiliki pengguna, sehingga superuser maupun pengguna yang termasuk Group Editor dapat mengubah data, sedangkan pengguna biasa tetap mendapatkan HTTP 403 Forbidden.
+
+**3. Menyesuaikan tampilan berdasarkan hak akses**
+Selain membatasi akses pada sisi server, saya juga menyembunyikan tombol aksi yang tidak dapat digunakan oleh pengguna. Sebagai contoh, tombol Edit ditampilkan kepada pengguna yang memiliki permission change_experience, sedangkan tombol Add dan Delete hanya ditampilkan kepada superuser. Hal ini membuat pembatasan akses diterapkan pada dua sisi, yaitu tampilan pada template dan validasi permission pada view.
+
+**4. Menambahkan fitur Edit pada Education**
+Terdapat kesalahan pada fitur education dimana education ini saya jadikan sebagai fitur yang disesuaikan untuk tutorial 3 sehingga saya lupa untuk menambahkan fitur edit pada section education. Pada bagian Education, sebelumnya data hanya dapat ditambahkan dan dihapus. Karena role Editor pada tugas ini harus dapat mengubah data, saya menambahkan fitur update_education serta menyesuaikan form dan URL agar dapat digunakan untuk proses edit. Permission change_education kemudian diberikan kepada Group Editor, sementara fitur tambah dan hapus tetap dibatasi untuk superuser.
