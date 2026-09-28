@@ -100,7 +100,7 @@ Sebagai contoh, styling form dibuat menggunakan selector yang dapat digunakan be
 
 ## AI Diclosure Tugas 4
 
-Saya tidak menggunakan AI untuk menulis, menghasilkan, atau menyelesaikan kode program pada Tugas 3. Implementasi kode, debugging, penyesuaian struktur tutorial dengan proyek, serta proses problem solving dilakukan secara mandiri berdasarkan materi perkuliahan, tutorial, dan dokumentasi yang digunakan dalam pengerjaan tugas.
+Saya tidak menggunakan AI untuk menulis, menghasilkan, atau menyelesaikan kode program pada Tugas 4. Implementasi kode, debugging, penyesuaian struktur tutorial dengan proyek, serta proses problem solving dilakukan secara mandiri berdasarkan materi perkuliahan, tutorial, dan dokumentasi yang digunakan dalam pengerjaan tugas.
 
 ### Deskripsi Proyek
 Tugas 4 merupakan pengembangan lanjutan dari website portofolio pribadi yang telah dibuat pada tugas sebelumnya menggunakan framework Django. Pada tugas ini, saya menerapkan sistem authentication dan authorization untuk membatasi akses pengguna terhadap data portofolio.
