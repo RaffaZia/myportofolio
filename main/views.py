@@ -1,17 +1,17 @@
 import datetime
 from django.contrib import messages
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core import serializers
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.views.decorators.http import require_POST
 
 from main.models import Experience, Education
 from main.forms import EducationForm, ExperienceForm
-
 
 
 def show_main(request):
@@ -31,25 +31,12 @@ def show_main(request):
 
 
 def show_experience(request):
-    json_response = get_experience_json(request)
-
-    experience = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-
-    experience = [item.object for item in experience]
-
     context = {
         "name": "Raffa",
-        "experience_list": experience,
+        "form" : ExperienceForm(),
     }
 
-    return render(
-        request,
-        "experience.html",
-        context
-    )
+    return render(request, "experience.html",context)
 
 def show_education(request):
     json_response = get_education_json(request)
@@ -205,13 +192,46 @@ def delete_experience(request, experience_id):
     return redirect("main:show_experience")
 
 def get_experience_json(request):
-    experience_list = Experience.objects.all()
-    data = serializers.serialize("json", experience_list, use_natural_foreign_keys=True)
+    title_query = request.GET.get("title", "").strip()
 
-    return HttpResponse(
-        data,
-        content_type="application/json"
-    )
+    experience_list = Experience.objects.prefetch_related("starred_by").all()
+
+    if title_query:
+        experience_list = experience_list.filter(
+            title__icontains=title_query
+        )
+
+    data = []
+
+    for experience in experience_list:
+        starred_users = experience.starred_by.all()
+
+        is_starred = (
+            request.user in starred_users
+            if request.user.is_authenticated
+            else False
+        )
+
+        starred_by_names = ", ".join(
+            [user.username for user in starred_users]
+        )
+
+        data.append({
+            "pk": str(experience.id),
+            "fields": {
+                "title": experience.title,
+                "description": experience.description,
+                "category": experience.category,
+                "category_display": experience.get_category_display(),
+                "thumbnail": experience.thumbnail,
+                "is_ongoing": experience.is_ongoing,
+                "star_count": starred_users.count(),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
 def register(request):
     form = UserCreationForm(request.POST or None)
@@ -260,3 +280,33 @@ def toggle_star(request, experience_id):
         experience.starred_by.add(request.user)
 
     return redirect("main:show_experience")
+
+@require_POST
+def create_experience_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {
+                "message": "Hanya pemilik portofolio yang dapat menambahkan experience."
+            },
+            status=403,
+        )
+
+    form = ExperienceForm(request.POST)
+
+    if form.is_valid():
+        experience = form.save()
+
+        return JsonResponse(
+            {
+                "message": "Experience berhasil ditambahkan.",
+                "pk": str(experience.id),
+            },
+            status=201,
+        )
+
+    return JsonResponse(
+        {
+            "errors": form.errors.get_json_data()
+        },
+        status=400,
+    )
