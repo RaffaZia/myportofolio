@@ -122,3 +122,57 @@ Selain membatasi akses pada sisi server, saya juga menyembunyikan tombol aksi ya
 
 **4. Menambahkan fitur Edit pada Education**
 Terdapat kesalahan pada fitur education dimana education ini saya jadikan sebagai fitur yang disesuaikan untuk tutorial 3 sehingga saya lupa untuk menambahkan fitur edit pada section education. Pada bagian Education, sebelumnya data hanya dapat ditambahkan dan dihapus. Karena role Editor pada tugas ini harus dapat mengubah data, saya menambahkan fitur update_education serta menyesuaikan form dan URL agar dapat digunakan untuk proses edit. Permission change_education kemudian diberikan kepada Group Editor, sementara fitur tambah dan hapus tetap dibatasi untuk superuser.
+
+
+## Tugas 5
+1. Debouncing adalah teknik untuk menunda eksekusi suatu fungsi sampai pengguna berhenti melakukan suatu aktivitas selama waktu tertentu. Pada fitur pencarian menggunakan AJAX, debouncing digunakan agar request ke server tidak dikirim setiap kali pengguna mengetik satu karakter. Sebagai contoh, ketika pengguna mengetik kata "Education", tanpa debouncing browser dapat mengirim request untuk setiap perubahan input seperti E, Ed, Edu, Educ, dan seterusnya. Hal ini dapat menyebabkan terlalu banyak request ke server. Dengan debouncing, request hanya dikirim setelah pengguna berhenti mengetik selama beberapa waktu, misalnya 300 milidetik. Dengan demikian, jumlah request yang dikirim menjadi lebih sedikit, server tidak menerima request yang tidak diperlukan, dan fitur pencarian menjadi lebih efisien serta responsif.Pada implementasi saya, debouncing diterapkan menggunakan setTimeout() dan clearTimeout() dengan delay 300 milidetik sebelum menjalankan fungsi fetchEducation().
+
+2. fetch() merupakan fungsi asynchronous yang mengembalikan sebuah Promise. Keyword await digunakan untuk menunggu Promise tersebut selesai sebelum kode pada baris berikutnya dijalankan. Dengan demikian, hasil dari fetch() dapat langsung disimpan ke dalam variabel dan digunakan pada proses berikutnya.
+
+Contohnya:
+const response = await fetch(EDUCATION_ENDPOINT);
+const result = await response.json();
+
+Pada kode tersebut, program akan menunggu sampai proses fetch() selesai sebelum melanjutkan ke response.json(). Setelah itu, program juga menunggu sampai response berhasil diubah menjadi data JSON. Jika await tidak digunakan, fetch() akan langsung mengembalikan sebuah Promise, sementara kode berikutnya tetap dijalankan tanpa menunggu hasil dari request tersebut. Akibatnya, kita belum mendapatkan objek Response atau data JSON yang sebenarnya ketika ingin menggunakannya.
+Hal ini juga sesuai dengan materi Tutorial 05 yang menjelaskan bahwa tanpa await, Promise tetap berjalan di belakang layar dan kode berikutnya langsung dieksekusi tanpa menunggu proses tersebut selesai.
+
+3. Cross-Site Scripting (XSS) adalah serangan ketika penyerang menyisipkan kode JavaScript berbahaya ke dalam halaman web sehingga kode tersebut dapat dijalankan pada browser pengguna. Pada aplikasi Django, data yang ditampilkan secara langsung menggunakan template Django relatif lebih aman karena Django secara otomatis melakukan HTML escaping terhadap variabel yang ditampilkan menggunakan {{ }}. Contohnya, karakter < dan > akan diubah menjadi bentuk yang tidak dianggap sebagai tag HTML oleh browser.Sementara itu, ketika data diperoleh melalui AJAX, data tersebut diterima oleh JavaScript dalam bentuk JSON. Jika data tersebut kemudian langsung dimasukkan ke halaman menggunakan innerHTML, browser akan menganggap isi data tersebut sebagai HTML. Oleh karena itu, apabila data mengandung tag atau atribut berbahaya, kode tersebut dapat dieksekusi oleh browser.
+
+Sebagai contoh, data seperti:
+<img src="x" onerror="alert('XSS!')">
+
+dapat menjadi berbahaya apabila langsung dimasukkan menggunakan innerHTML.
+Untuk mencegah hal tersebut, pada implementasi saya saya membuat fungsi escapeHtml() dan melakukan escaping terhadap data sebelum dimasukkan ke dalam HTML. Dengan demikian, data dari server tetap ditampilkan sebagai teks dan tidak dieksekusi sebagai HTML atau JavaScript.
+
+## AI Diclosure
+Saya tidak menggunakan AI untuk menulis, menghasilkan, atau menyelesaikan kode program pada Tugas 5. Implementasi kode, debugging, penyesuaian struktur tutorial dengan proyek, serta proses problem solving dilakukan secara mandiri berdasarkan materi perkuliahan, tutorial, dan dokumentasi yang digunakan dalam pengerjaan tugas.
+
+### Set-up Project
+Pada Tugas 5, saya melanjutkan proyek website portofolio yang telah dibuat pada tutorial sebelumnya. Implementasi pada tugas ini berfokus pada penggunaan JavaScript untuk membuat halaman menjadi lebih interaktif dengan menerapkan AJAX menggunakan Fetch API.
+Pada bagian Education, saya menyesuaikan implementasi dari fitur Experience agar data dapat ditampilkan secara dinamis melalui AJAX tanpa melakukan reload halaman. Saya juga menambahkan fitur pencarian, debouncing, modal untuk menambahkan data, AJAX POST, toast notification, serta validasi dan perlindungan terhadap XSS.
+Selain itu, implementasi pada Tugas 5 tetap mempertahankan sistem autentikasi dan otorisasi dari Tugas 4. Oleh karena itu, fitur seperti tambah, edit, dan hapus Education tetap dibatasi berdasarkan hak akses pengguna.
+
+### Deskripsi Project dan Problem Solving
+**1. Menerapkan AJAX untuk menampilkan data Education**
+Saya perlu menyesuaikan fitur Education agar data tidak lagi ditampilkan secara langsung melalui template Django, tetapi dapat dimuat secara dinamis menggunakan JavaScript dan AJAX. Untuk menerapkannya, saya membuat endpoint get_education_json yang mengembalikan data Education dalam bentuk JsonResponse. Pada sisi frontend, JavaScript menggunakan fetch() untuk mengambil data dari endpoint tersebut. Data JSON yang diterima kemudian digunakan untuk membuat elemen Education secara dinamis sehingga halaman dapat diperbarui tanpa melakukan reload.
+
+**2. Menambahkan fitur pencarian dengan AJAX dan Debouncing**
+Saya menambahkan fitur pencarian pada halaman Education agar pengguna dapat mencari data berdasarkan nama institusi atau program pendidikan. Search dilakukan dengan mengirimkan parameter query ke endpoint JSON dan melakukan filtering pada sisi server. Saya juga menerapkan teknik debouncing pada input pencarian. Dengan demikian, request AJAX tidak dikirim setiap kali pengguna mengetik karakter, tetapi hanya dikirim setelah pengguna berhenti mengetik selama beberapa saat. Hal ini mengurangi jumlah request yang dikirim ke server dan membuat fitur pencarian lebih efisien.
+
+**3. Menambahkan loading, error, dan empty state**
+Karena data Education sekarang dimuat secara asynchronous menggunakan AJAX, saya perlu menangani beberapa kemungkinan kondisi pada halaman. Saya menambahkan loading state ketika data sedang dimuat, error state ketika request gagal, dan empty state ketika tidak terdapat data yang sesuai dengan pencarian.Dengan adanya ketiga kondisi tersebut, pengguna mendapatkan informasi yang jelas mengenai status proses pengambilan data.
+
+**4. Menambahkan fitur Add Education menggunakan AJAX**
+Saya mengubah proses penambahan Education agar dapat dilakukan melalui modal tanpa melakukan reload halaman. Form Education ditampilkan menggunakan Popover API, kemudian ketika form disubmit, JavaScript mengirimkan data menggunakan fetch() dengan method POST. Setelah server berhasil menyimpan data, modal ditutup, toast success ditampilkan, dan daftar Education dimuat kembali menggunakan AJAX. Dengan demikian, Education baru dapat langsung muncul tanpa perlu melakukan refresh halaman.
+
+**5. Menambahkan CSRF Token pada AJAX POST**
+Karena proses penambahan Education menggunakan HTTP POST, saya perlu memastikan request tersebut tetap dilindungi oleh mekanisme CSRF Django. Saya mengambil CSRF token dari cookie kemudian mengirimkannya melalui header X-CSRFToken pada request fetch().
+Dengan demikian, request AJAX tetap mengikuti mekanisme keamanan CSRF yang digunakan oleh Django. Tutorial 05 juga menekankan bahwa request POST melalui AJAX perlu mengirimkan CSRF token.
+
+**6. Menambahkan validasi dan perlindungan XSS**
+Saya menambahkan validasi pada EducationForm untuk memastikan data yang dimasukkan pengguna valid. Selain itu, saya juga menerapkan perlindungan XSS karena data Education sekarang ditampilkan melalui JavaScript menggunakan innerHTML.
+Saya membuat fungsi escapeHtml() untuk melakukan escaping terhadap data sebelum dimasukkan ke dalam HTML. Hal ini diperlukan karena Django tidak lagi melakukan auto-escaping terhadap data yang sudah diterima oleh JavaScript melalui JSON. Dengan melakukan escaping, data berbahaya akan ditampilkan sebagai teks dan tidak dieksekusi sebagai HTML atau JavaScript.
+
+
+
+

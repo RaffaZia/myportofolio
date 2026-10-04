@@ -9,6 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
+from django.db.models import Q
 
 from main.models import Experience, Education
 from main.forms import EducationForm, ExperienceForm
@@ -39,15 +40,9 @@ def show_experience(request):
     return render(request, "experience.html",context)
 
 def show_education(request):
-    json_response = get_education_json(request)
-
-    education = serializers.deserialize("json", json_response.content.decode("utf-8"),)
-
-    education = [item.object for item in education]
-
     context = {
         "name": "Raffa",
-        "education_list": education,
+        "form": EducationForm(),
     }
 
     return render(request, "education.html", context)
@@ -72,9 +67,34 @@ def create_education(request):
     return render(request, "education_form.html", context)
 
 def get_education_json(request):
+    search_query = request.GET.get("q", "").strip()
+
     education_list = Education.objects.all()
-    data = serializers.serialize("json", education_list)
-    return HttpResponse(data, content_type="application/json")
+
+    if search_query:
+        education_list = education_list.filter(
+            Q(institution__icontains=search_query)
+            | Q(degree__icontains=search_query)
+        )
+
+    data = []
+
+    for education in education_list:
+        data.append({
+            "pk": education.id,
+            "fields": {
+                "institution": education.institution,
+                "degree": education.degree,
+                "started_at": education.started_at.strftime("%Y-%m-%d"),
+                "ended_at": (
+                    education.ended_at.strftime("%Y-%m-%d")
+                    if education.ended_at
+                    else None
+                ),
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
 def get_education_xml(request):
     education_list = Education.objects.all()
@@ -100,31 +120,25 @@ def delete_education(request, education_id):
 
 @login_required(login_url="/login/")
 def update_education(request, education_id):
-    if not request.user.has_perm("main.change_experience"):
+    if not request.user.has_perm("main.change_education"):
         raise PermissionDenied
-    
-    education = get_object_or_404(
-        Education,
-        pk=education_id
-    )
 
-    form = EducationForm(
-        request.POST or None,
-        instance=education
-    )
+    education = get_object_or_404(Education,pk=education_id)
+
+    form = EducationForm(request.POST or None, instance=education)
 
     if request.method == "POST":
         if form.is_valid():
             form.save()
-            return redirect("main:show_experience")
+            return redirect("main:show_education")
 
     context = {
         "name": "Raffa",
         "form": form,
-        "experience": education,
+        "education": education,
     }
 
-    return render(request,"experience_form.html",context)
+    return render(request,"education_form.html",context)
 
 @login_required(login_url="/login/")
 def create_experience(request):
@@ -300,6 +314,39 @@ def create_experience_ajax(request):
             {
                 "message": "Experience berhasil ditambahkan.",
                 "pk": str(experience.id),
+            },
+            status=201,
+        )
+
+    return JsonResponse(
+        {
+            "errors": form.errors.get_json_data()
+        },
+        status=400,
+    )
+
+@require_POST
+def create_education_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {
+                "message": (
+                    "Hanya pemilik portofolio yang "
+                    "dapat menambahkan education."
+                )
+            },
+            status=403,
+        )
+
+    form = EducationForm(request.POST)
+
+    if form.is_valid():
+        education = form.save()
+
+        return JsonResponse(
+            {
+                "message": "Education berhasil ditambahkan.",
+                "pk": education.id,
             },
             status=201,
         )
