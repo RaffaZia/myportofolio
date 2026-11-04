@@ -77,8 +77,10 @@
 
 <script>
     const EDUCATION_ENDPOINT =
-        "{% url 'main:get_education_json' %}";
+        "{% url 'api:education-list' %}";
 
+    const API_EDUCATION_DETAIL_URL_TEMPLATE = 
+        "{% url 'api:education-detail' 0 %}";
     const loadingState =
         document.getElementById("loading");
 
@@ -92,7 +94,7 @@
         document.getElementById("education-list");
     
     const CREATE_EDUCATION_ENDPOINT =
-        "{% url 'main:create_education_ajax' %}";
+        "{% url 'api:education-list' %}";
 
     const educationForm =
         document.getElementById("education-form");
@@ -153,8 +155,8 @@
 
 
     function buildEducationElement(item) {
-        const education = item.fields;
-        const educationId = item.pk;
+        const education = item;
+        const educationId = item.id;
 
         const article = document.createElement("article");
 
@@ -193,25 +195,17 @@
         }
 
         if (IS_SUPERUSER) {
-            const deleteUrl =
-                DELETE_EDUCATION_URL_TEMPLATE.replace(
+            const deleteApiUrl =
+                API_EDUCATION_DETAIL_URL_TEMPLATE.replace(
                     "/0/",
                     `/${educationId}/`
                 );
 
             actionsHtml += `
                 <form
-                    method="post"
-                    action="${deleteUrl}"
                     class="education-delete-action"
-                    onsubmit="return confirm('Yakin ingin menghapus education ini?');"
+                    data-api-url="${deleteApiUrl}"
                 >
-                    <input
-                        type="hidden"
-                        name="csrfmiddlewaretoken"
-                        value="${getCookie("csrftoken") || ""}"
-                    >
-
                     <button
                         type="submit"
                         class="button button-danger"
@@ -368,13 +362,95 @@
         return cookieValue;
     }
 
+    educationList.addEventListener(
+        "submit",
+        async function (event) {
+            const deleteForm = event.target.closest(
+                ".education-delete-action"
+            );
+
+            if (!deleteForm) {
+                return;
+            }
+
+            event.preventDefault();
+
+            const confirmed = confirm(
+                "Yakin ingin menghapus education ini?"
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            const deleteButton =
+                deleteForm.querySelector('button[type="submit"]');
+
+            deleteButton.disabled = true;
+
+            try {
+                const response = await fetch(
+                    deleteForm.dataset.apiUrl,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            "X-CSRFToken": getCookie("csrftoken"),
+                            "Accept": "application/json"
+                        }
+                    }
+                );
+
+                if (response.status === 204) {
+                    showToast(
+                        "Berhasil",
+                        "Education berhasil dihapus!",
+                        "success"
+                    );
+
+                    fetchEducation(
+                        searchInput.value.trim()
+                    );
+
+                } else {
+                    const result = await response.json()
+                        .catch(() => ({}));
+
+                    const errorMessage = Object.values(result)
+                        .flat()
+                        .join(" ");
+
+                    showToast(
+                        "Gagal menghapus education",
+                        errorMessage ||
+                        `Terjadi kesalahan (status ${response.status}).`,
+                        "error"
+                    );
+                }
+
+            } catch (error) {
+                console.error(
+                    "Error deleting education:",
+                    error
+                );
+
+                showToast(
+                    "Gagal menghapus education",
+                    "Tidak dapat terhubung ke server. Silakan coba lagi.",
+                    "error"
+                );
+
+            } finally {
+                deleteButton.disabled = false;
+            }
+        }
+    );
+    
     async function addEducation(event) {
         event.preventDefault();
 
-        const submitButton =
-            educationForm.querySelector(
-                'button[type="submit"]'
-            );
+        const submitButton = educationForm.querySelector(
+            'button[type="submit"]'
+        );
 
         submitButton.disabled = true;
 
@@ -385,15 +461,15 @@
                     method: "POST",
 
                     headers: {
-                        "X-CSRFToken": getCookie("csrftoken")
+                        "X-CSRFToken": getCookie("csrftoken"),
+                        "Accept": "application/json"
                     },
 
                     body: new FormData(educationForm),
                 }
             );
 
-            const result =
-                await response.json().catch(() => ({}));
+            const result = await response.json().catch(() => ({}));
 
             if (response.ok) {
                 educationForm.reset();
@@ -411,14 +487,16 @@
                 );
 
             } else {
-                const errorMessages = result.errors
-                    ? Object.values(result.errors)
-                        .flat()
-                        .map(error => error.message)
-                    : [
-                        result.message ||
-                        `Terjadi kesalahan (status ${response.status}).`
-                    ];
+                const errorMessages = Object.entries(result)
+                    .flatMap(([field, messages]) => {
+                        const fieldErrors = Array.isArray(messages)
+                            ? messages
+                            : [messages];
+
+                        return fieldErrors.map(
+                            message => `${field}: ${message}`
+                        );
+                    });
 
                 showToast(
                     "Gagal menambahkan education",
