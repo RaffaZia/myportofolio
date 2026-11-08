@@ -1106,3 +1106,377 @@ h1,h2,h3,h4,.brand {
         width: 100%;
     }
 }
+
+
+/* =========================================
+   SEARCH FILTER - EDUCATION & EXPERIENCE
+   ========================================= */
+
+.project-search {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 560px;
+    margin-bottom: 2rem;
+}
+
+.project-search__input {
+    flex: 1;
+    min-width: 0;
+    height: 46px;
+    padding: 0.75rem 1rem;
+
+    border: 1px solid var(--line);
+    border-radius: 10px;
+
+    background-color: #ffffff;
+    color: var(--ink);
+
+    font-family: inherit;
+    font-size: 0.95rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.project-search__input::placeholder {
+    color: #9AAEC0;
+}
+
+.project-search__input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(136, 189, 242, 0.18);
+}
+
+.project-search .button {
+    height: 46px;
+    min-width: 85px;
+    padding: 0 1.25rem;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: var(--ink);
+    color: #ffffff;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.project-search .button:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(56, 73, 89, 0.15);
+}
+
+
+/* =========================================
+   ADD BUTTON
+   ========================================= */
+
+.project-add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    padding: 0.75rem 1.25rem;
+
+    background-color: var(--ink);
+    color: #ffffff;
+
+    border-radius: 10px;
+}
+
+.project-add-button:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   FORM MODAL - GENERAL
+   ========================================= */
+
+.project-form-modal__content {
+    width: min(100%, 600px);
+    padding: 2rem;
+
+    border: 1px solid var(--line);
+    border-radius: 16px;
+
+    background-color: var(--paper);
+
+    box-shadow:
+        0 20px 60px rgba(56, 73, 89, 0.20);
+}
+
+.project-form-modal__content h2 {
+    margin-bottom: 1.75rem;
+
+    color: var(--ink);
+
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.project-form-modal__close {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    color: var(--accent-dark);
+    font-size: 1.8rem;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.project-form-modal__close:hover {
+    background-color: var(--section-bg);
+    color: var(--ink);
+}
+
+
+/* =========================================
+   FORM FIELDS - ADD EDUCATION & EXPERIENCE
+   ========================================= */
+
+.project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.project-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.project-form .form-group label {
+    display: block;
+
+    margin: 0;
+
+    color: var(--ink);
+
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.project-form input,
+.project-form textarea,
+.project-form select {
+    width: 100%;
+    min-height: 45px;
+
+    padding: 0.75rem 0.9rem;
+
+    border: 1px solid var(--line);
+    border-radius: 9px;
+
+    background-color: #ffffff;
+    color: var(--ink);
+
+    font-family: inherit;
+    font-size: 0.92rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.project-form input::placeholder,
+.project-form textarea::placeholder {
+    color: #9AAEC0;
+}
+
+.project-form input:focus,
+.project-form textarea:focus,
+.project-form select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(136, 189, 242, 0.18);
+}
+
+.project-form textarea {
+    min-height: 125px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+/* Date input */
+
+.project-form input[type="date"] {
+    cursor: pointer;
+}
+
+/* File / thumbnail input */
+
+.project-form input[type="file"] {
+    padding: 0.5rem;
+    cursor: pointer;
+    background-color: var(--section-bg);
+}
+
+/* Error validation */
+
+.project-form .form-error {
+    margin: 0;
+    color: #B42318;
+    font-size: 0.82rem;
+}
+
+
+/* =========================================
+   FORM MODAL ACTIONS
+   ========================================= */
+
+.project-form-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+
+    margin-top: 0.75rem;
+    padding-top: 1.25rem;
+
+    border-top: 1px solid var(--line);
+}
+
+.project-form-modal__actions .button {
+    min-height: 43px;
+    padding: 0.7rem 1.2rem;
+    border-radius: 9px;
+}
+
+.project-form-modal__actions .button:not(.button-secondary) {
+    background-color: var(--ink);
+    color: #ffffff;
+}
+
+.project-form-modal__actions .button:not(.button-secondary):hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-2px);
+}
+
+.project-form-modal__actions .button-secondary {
+    background-color: var(--section-bg);
+    color: var(--ink);
+    border: 1px solid var(--line);
+}
+
+.project-form-modal__actions .button-secondary:hover {
+    background-color: var(--line);
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   EDUCATION & EXPERIENCE EDIT FORM
+   ========================================= */
+
+.education-form,
+.experience-form {
+    padding: 1.75rem;
+
+    background-color: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+
+    box-shadow: 0 6px 20px rgba(56, 73, 89, 0.06);
+}
+
+.education-form p,
+.experience-form p {
+    margin-bottom: 1.25rem;
+}
+
+.education-form label,
+.experience-form label {
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.education-form input,
+.education-form textarea,
+.education-form select,
+.experience-form input,
+.experience-form textarea,
+.experience-form select {
+    border-radius: 9px;
+    min-height: 45px;
+}
+
+.education-form input:focus,
+.education-form textarea:focus,
+.education-form select:focus,
+.experience-form input:focus,
+.experience-form textarea:focus,
+.experience-form select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(136, 189, 242, 0.18);
+}
+
+
+/* =========================================
+   RESPONSIVE SEARCH & MODAL
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .project-search {
+        max-width: 100%;
+        gap: 0.5rem;
+    }
+
+    .project-search__input {
+        font-size: 0.85rem;
+    }
+
+    .project-search .button {
+        min-width: 70px;
+        padding: 0 0.85rem;
+    }
+
+    .project-form-modal__content {
+        padding: 1.5rem;
+    }
+
+    .project-form-modal__content h2 {
+        font-size: 1.3rem;
+    }
+
+    .project-form-modal__actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .project-form-modal__actions .button {
+        width: 100%;
+    }
+
+    .education-form,
+    .experience-form {
+        padding: 1.25rem;
+    }
+}

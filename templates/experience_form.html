@@ -26,17 +26,18 @@
                 </h1>
             </div>
 
-            <form method="POST" class="experience-form">
+            <form
+                id="experience-form"
+                method="POST"
+                enctype="multipart/form-data"
+                class="experience-form"
+            >
                 {% csrf_token %}
 
                 {{ form.as_p }}
 
                 <button type="submit" class="submit-button">
-                    {% if experience %}
-                        Update Experience
-                    {% else %}
-                        Save Experience
-                    {% endif %}
+                    Update Experience
                 </button>
             </form>
 
@@ -52,5 +53,172 @@
         </div>
     </section>
 </main>
+
+{% if experience %}
+<script>
+    const EXPERIENCE_DETAIL_ENDPOINT =
+        "{% url 'api:experience-detail' experience.id %}";
+    const experienceForm = document.getElementById("experience-form");
+
+    function getCookie(name) {
+        let cookieValue = null;
+
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+
+                if (cookie.substring(0, name.length + 1) === name + "=") {
+                    cookieValue = decodeURIComponent(
+                        cookie.substring(name.length + 1)
+                    );
+                    break;
+                }
+            }
+        }
+
+        return cookieValue;
+    }
+
+    async function loadExperience() {
+        try {
+            const response = await fetch(EXPERIENCE_DETAIL_ENDPOINT, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Gagal mengambil data Experience.");
+            }
+
+            const experience = await response.json();
+
+            // Mengisi field form berdasarkan respons DRF.
+            Object.entries(experience).forEach(([key, value]) => {
+                const field = experienceForm.elements.namedItem(key);
+
+                // File input tidak bisa diisi melalui JavaScript.
+                if (!field || key === "thumbnail") {
+                    return;
+                }
+
+                // Abaikan field yang bukan input form.
+                if (field instanceof RadioNodeList) {
+                    return;
+                }
+
+                field.value = value ?? "";
+            });
+
+            // Menampilkan thumbnail lama jika tersedia.
+            if (experience.thumbnail) {
+                const thumbnailField =
+                    experienceForm.elements.namedItem("thumbnail");
+
+                if (thumbnailField) {
+                    const preview = document.createElement("img");
+
+                    preview.src = experience.thumbnail;
+                    preview.alt = "Current experience thumbnail";
+                    preview.className = "experience-thumbnail";
+                    preview.style.maxWidth = "200px";
+
+                    thumbnailField.insertAdjacentElement(
+                        "afterend",
+                        preview
+                    );
+
+                    const previewLabel = document.createElement("p");
+                    previewLabel.textContent = "Thumbnail saat ini:";
+                    thumbnailField.insertAdjacentElement(
+                        "beforebegin",
+                        previewLabel
+                    );
+                }
+            }
+
+        } catch (error) {
+            console.error("Error loading experience:", error);
+
+            showToast(
+                "Gagal memuat Experience",
+                "Tidak dapat mengambil data Experience.",
+                "error"
+            );
+        }
+    }
+
+    loadExperience();
+
+    async function updateExperience(event) {
+        event.preventDefault();
+
+        const submitButton = experienceForm.querySelector(
+            'button[type="submit"]'
+        );
+
+        submitButton.disabled = true;
+
+        try {
+            const formData = new FormData(experienceForm);
+
+            const response = await fetch(EXPERIENCE_DETAIL_ENDPOINT, {
+                method: "PATCH",
+                headers: {
+                    "Accept": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken")
+                },
+                body: formData
+            });
+
+            const result = await response.json().catch(() => ({}));
+
+            if (response.ok) {
+                showToast(
+                    "Berhasil",
+                    "Experience berhasil diperbarui!",
+                    "success"
+                );
+
+                window.location.href = "{% url 'main:show_experience' %}";
+
+            } else {
+                const errorMessages = Object.entries(result)
+                    .map(([field, errors]) => {
+                        const messages = Array.isArray(errors)
+                            ? errors.join(" ")
+                            : String(errors);
+
+                        return `${field}: ${messages}`;
+                    });
+
+                showToast(
+                    "Gagal memperbarui Experience",
+                    errorMessages.join(" ") ||
+                        `Terjadi kesalahan (status ${response.status}).`,
+                    "error"
+                );
+            }
+
+        } catch (error) {
+            console.error("Error updating experience:", error);
+
+            showToast(
+                "Gagal memperbarui Experience",
+                "Tidak dapat terhubung ke server. Silakan coba lagi.",
+                "error"
+            );
+
+        } finally {
+            submitButton.disabled = false;
+        }
+    }
+
+    experienceForm.addEventListener("submit", updateExperience);
+</script>
+{% endif %}
 
 {% endblock content %}
