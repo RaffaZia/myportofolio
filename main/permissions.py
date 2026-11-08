@@ -18,3 +18,18 @@ class IsPortfolioOwnerOrEditorOrReadOnly(BasePermission):
             request.method in ("PUT", "PATCH")
             and request.user.has_perm("main.change_education")
         )
+
+class IsExperienceOwnerOrEditorOrReadOnly(BasePermission):
+    message = "You do not have permission to perform this action."
+
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        if not request.user.is_authenticated:
+            return False
+        if request.user.is_superuser:
+            return True
+        return (
+            request.method in ("PUT", "PATCH")
+            and request.user.has_perm("main.change_experience")
+        )
